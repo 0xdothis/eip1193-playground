@@ -26,3 +26,9 @@ interface EthereumProvider {
 interface ProviderMethods {
   methods: string[];
 }
+
+declare global {
+  interface Window {
+    ethereum?: EthereumProvider;
+  }
+}

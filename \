@@ -1,13 +1,6 @@
 import React from "react";
 import { Button } from "./components/ui/button";
 
-//Declare a global Window interface to help clear window.ethereum error in the IDE
-declare global {
-  interface Window {
-    ethereum?: EthereumProvider;
-  }
-}
-
 function App() {
   const [method, setMethod] = React.useState<string[]>([]);
   const [networkInfo, setNetworkInfo] = React.useState<string>("");
@@ -23,6 +16,8 @@ function App() {
 
       const methods = ["eth_accounts", "eth_chainId"];
 
+      setMethod(methods);
+
       const results = Promise.all(
         methods.map((method) =>
           ethereum
@@ -32,13 +27,12 @@ function App() {
         ),
       );
 
-      setMethod(await results);
+      console.log("Supported methods", await results);
     } else {
       console.error("No etherem provider detected");
     }
   }
 
-  // FUnction to get chain ID
   async function getChainId() {
     if (isWindowEthereum) {
       const ethereum = window.ethereum as EthereumProvider;
@@ -47,7 +41,7 @@ function App() {
         const id = Promise.resolve(
           ethereum
             .request({ method: "eth_chainId" })
-            .then((chainId) => setNetworkInfo(chainId as string)),
+            .then((chainId) => setNetworkInfo(chainId)),
         );
 
         return Number(id);
@@ -57,7 +51,7 @@ function App() {
     }
   }
   return (
-    <div className="max-w-[1024px] mx-auto font-mono px-4 py-5 border border-slate-500 rounded-md mt-20">
+    <div className="max-w-[1024px] mx-auto font-mono px-4 py-5">
       <h1 className="text-4xl">EIP 1193 Playground</h1>
       <p className="text-slate-500 tracking-wider ">
         A simple playground to understand the fundamentals
