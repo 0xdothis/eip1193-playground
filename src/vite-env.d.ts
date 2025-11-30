@@ -11,8 +11,13 @@ interface ProviderConnectionInfo {
   readonly chainId: string;
 }
 
+interface RequestArguments {
+  readonly method: string;
+  readonly params?: readonly unknown[] | object;
+}
+
 interface EthereumProvider {
-  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>;
+  request: (args: RequestArguments) => Promise<unknown>;
   on?: (eventName: string, listeners: (...args: unknown[]) => void) => void;
   removeListener?: (
     eventName: string,
@@ -25,6 +30,11 @@ interface EthereumProvider {
 
 interface ProviderMethods {
   methods: string[];
+}
+
+interface ProviderRpcError extends Error {
+  code: number;
+  data?: unknown;
 }
 
 declare global {

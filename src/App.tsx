@@ -21,7 +21,7 @@ function App() {
       const ethereum = window.ethereum as EthereumProvider;
       console.log("Ethereum provider detected");
 
-      const methods = ["eth_accounts", "eth_chainId"];
+      const methods = ["eth_accounts", "eth_chainId", "hello"];
 
       const results = Promise.all(
         methods.map((method) =>
@@ -57,8 +57,8 @@ function App() {
     }
   }
   return (
-    <div className="max-w-[1024px] mx-auto font-mono px-4 py-5 border border-slate-500 rounded-md mt-20">
-      <h1 className="text-4xl">EIP 1193 Playground</h1>
+    <div className="max-w-[1024px] mx-auto font-mono px-4 py-5 mt-20">
+      <h1 className="text-4xl font-bold">EIP 1193 Playground</h1>
       <p className="text-slate-500 tracking-wider ">
         A simple playground to understand the fundamentals
       </p>
